@@ -1,0 +1,19 @@
+---
+- name: runnign pb
+  hosts: all
+  becomes: true
+  tasks:
+    - name: Generate a basic home page from jinja2 template
+      copy:
+        src: alias.conf
+        dest: /etc/httpd.conf/
+        force: yes
+      notify: restart httpd service
+
+  handlers:
+    - name: restart httpd service
+      service:
+        name: httpd
+        state: restarted
+        enabled: yes      
+
